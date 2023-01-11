@@ -20,13 +20,13 @@ class TotalPricesController extends Controller
     {
         $data = session('data');
         $chart = session('chart');
-        $results = DB::select( DB::raw("
+        $results = DB::connection('mysql')->select( DB::raw("
             SELECT GLN_Number, concat(concat(ChargeOwner, ' '), Note) as tariff, Note, ChargeOwner
-            FROM ".config('database.connections.mysql.database').".datahub_price_lists
+            FROM datahub_price_lists
             WHERE GLN_Number IN (SELECT SUBSTRING(grid_operator_gln,
                                                   1,
                                                   CHAR_LENGTH(grid_operator_gln) - 4)
-                                 FROM ".config('database.connections.mysql.database').".charge_groups
+                                 FROM charge_groups
                                  WHERE charge_group_2 = 'C')
               AND ChargeType = 'D03'
               AND Note NOT IN ('Nettarif A0', 'Nettarif A høj',

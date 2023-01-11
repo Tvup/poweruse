@@ -14,7 +14,7 @@ class DatahubPriceList extends BaseModel
 
     protected $keyType = 'string';
 
-    protected $primaryKey = ['ChargeType', 'ChargeTypeCode', 'Note', 'ValidFrom'];
+    protected $primaryKey = ['ChargeType', 'ChargeTypeCode', 'GLN_number', 'ValidFrom', 'Note'];
 
     public function getMatchingInDb(): DatahubPriceList|bool
     {

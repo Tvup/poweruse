@@ -58,7 +58,6 @@ class EnergiDataServiceLoadDatahubPriceLists extends Command
                 });
                 try {
                     DatahubPriceList::create([
-
                         'ChargeOwner' => $record['ChargeOwner'],
                         'GLN_Number' => $gln,
                         'ChargeType' => $record['ChargeType'],
@@ -95,10 +94,14 @@ class EnergiDataServiceLoadDatahubPriceLists extends Command
                         'TransparentInvoicing' => $record['TransparentInvoicing'],
                         'TaxIndicator' => $record['TaxIndicator'],
                         'ResolutionDuration' => $record['ResolutionDuration']]);
-
                 } catch (QueryException $e) {
+                    //We have seen that data from EnergiDataService wasn't as expected from documentation
+                    //The documentation states that ChargeType, ChargeTypeCode, Note, and ValidFrom are primary key for dataset
+                    //but that gives integrity violations for primary key. Adding 'Note' to primary key seems to fix this.
+                    //In case there is more to it, we'll handle integrity violations by writing a warning.
                     if (Str::contains($e->getMessage(), self::INTEGRITY_CONSTRAINT_VIOLATION)) {
-                        //NOP
+                        logger()->warning('Duplicate entry for GLN: ' . $gln . ' ChargeType: ' . $record['ChargeType'] . ' ChargeTypeCode: ' . $record['ChargeTypeCode'] . ' ValidFrom: ' . $record['ValidFrom']);
+                        logger()->warning('More from same record: ValidTo: ' . $record['ValidTo'] . ' VATClass: ' . $record['VATClass'] . ' Resolution: ' . $record['ResolutionDuration']. ' Description: ' . $record['Description']);
                     } else {
                         throw $e;
                     }

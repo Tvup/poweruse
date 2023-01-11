@@ -16,6 +16,7 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         \Illuminate\Auth\AuthenticationException::class,
         \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException::class,
+        \Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class,
     ];
 
     /**
