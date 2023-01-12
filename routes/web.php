@@ -34,6 +34,7 @@ Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.
 
 Route::get('el/', 'ElController@index')->name('el');
 Route::get('el-meteringpoint/', 'ElController@indexMeteringPoint')->name('el-meteringpoint');
+Route::get('metering-point/', 'MeteringPointController@index')->name('metering-point');
 Route::get('el-charges/', 'ElController@indexCharges')->name('el-charges');
 Route::get('el-spotprices/', 'ElController@indexSpotprices')->name('el-spotprices');
 Route::get('consumption/', 'ElController@indexConsumption')->name('consumption');

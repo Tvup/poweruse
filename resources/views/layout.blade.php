@@ -73,6 +73,8 @@
             border-radius: 50%;
         }
     </style>
+    @vite('resources/js/app.js')
+    @vite('resources/css/app.css')
 
 </head>
 <body>
